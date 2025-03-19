@@ -1,8 +1,25 @@
-# Exemple 1 : Node.js (npm)
-- name: Cache npm
- uses: actions/cache@v3
- with:
- path: ~/.npm
- key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
- restore-keys: |
- ${{ runner.os }}-node-
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Cache npm
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
