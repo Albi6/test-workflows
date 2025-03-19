@@ -1,0 +1,8 @@
+# Exemple 1 : Node.js (npm)
+- name: Cache npm
+ uses: actions/cache@v3
+ with:
+ path: ~/.npm
+ key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+ restore-keys: |
+ ${{ runner.os }}-node-
